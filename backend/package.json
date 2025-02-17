@@ -1,4 +1,11 @@
 {
+  "name": "job-portal-backend",
+  "version": "1.0.0",
+  "description": "Job portal backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
