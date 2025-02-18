@@ -1,33 +1,34 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import router from './routes/userRoutes.js';
+
+import jobRoutes from './routes/JobRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import applicationRoutes from './routes/applicationRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
+import interviewRoutes from './routes/interviewRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3500;
-const MONGOURL = process.env.MONGO_URL;
+app.use(express.json());
+app.use(cors());
 
-if (!MONGOURL) {
-    console.error("MongoDB connection string (MONGO_URL) is not defined in environment variables.");
-    process.exit(1);
-}
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));
 
-// app.use(express.json());
-// app.use(bodyParser.json());
-// app.use(cors());
-// app.use('/api/user', router);
+app.use('/api/jobs', jobRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/applications', applicationRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/interviews', interviewRoutes);
+app.use('/api/notifications', notificationRoutes);
 
-mongoose.connect(MONGOURL)
-    .then(() => {
-        console.log("MongoDB connected");
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("Failed to connect to MongoDB:", err);
-    });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
