@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCompany, getCompanies, getCompanyById, updateCompany, deleteCompany } from '../controllers/companyController.js';
+import { createCompany, getCompanies, getCompanyById, updateCompany, deleteCompany } from '../controllers/companyControllers.js';
 const router = express.Router();
 
 router.post('/', createCompany);

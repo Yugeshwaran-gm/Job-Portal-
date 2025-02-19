@@ -1,5 +1,5 @@
 import express from 'express';
-import { scheduleInterview, getInterviews, getInterviewById, updateInterview, deleteInterview } from '../controllers/interviewController.js';
+import { scheduleInterview, getInterviews, getInterviewById, updateInterview, deleteInterview } from '../controllers/interviewControllers.js';
 const router = express.Router();
 
 router.post('/', scheduleInterview);
