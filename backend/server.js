@@ -10,13 +10,17 @@ import messageRoutes from './routes/messageRoutes.js';
 import interviewRoutes from './routes/interviewRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import errorHandler from './middleware/errorMiddleware.js';
+
+
 
 dotenv.config();
+// require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+app.use(errorHandler);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected'))

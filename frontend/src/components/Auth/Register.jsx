@@ -14,8 +14,9 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/auth/register', { name, email, password, role });
-      navigate('/login');
+      const response = await axios.post('http://localhost:3000/api/users/register', { name, email, password, role });
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     }
@@ -53,7 +54,7 @@ const Register = () => {
         </select>
         <button type="submit">Register</button>
       </form>
-      <p>Already have an account? <a href="/Login">Login</a></p>
+      <p>Already have an account? <a href="/login">Login</a></p>
     </div>
   );
 };

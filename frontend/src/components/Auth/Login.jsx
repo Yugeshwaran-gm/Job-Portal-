@@ -12,9 +12,17 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
+      const response = await axios.post('http://localhost:3000/api/users/login', { email, password });
+
+      // ✅ Store authentication data in localStorage
       localStorage.setItem('token', response.data.token);
-      navigate('/dashboard');
+      localStorage.setItem('userRole', response.data.role);
+
+      // ✅ Redirect based on role
+      if (response.data.role === 'admin') navigate('/admin-dashboard');
+      else if (response.data.role === 'employer') navigate('/employer-dashboard');
+      else navigate('/seeker-dashboard');
+
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid credentials');
     }
@@ -41,7 +49,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
-      <p>Don't have an account? <a href="/Register">Register</a></p>
+      <p>Don't have an account? <a href="/register">Register</a></p>
     </div>
   );
 };

@@ -48,3 +48,17 @@ export const deleteJob = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const createJobPost = async (req, res) => {
+  try {
+    if (req.user.role !== 'employer') {
+      return res.status(403).json({ message: 'Unauthorized: Only employers can post jobs' });
+    }
+
+    const job = new Job({ ...req.body, postedBy: req.user.id });
+    await job.save();
+    res.status(201).json(job);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
