@@ -11,19 +11,39 @@ import interviewRoutes from './routes/interviewRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import errorHandler from './middleware/errorMiddleware.js';
-
-
+import User from './models/user.js';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
-// require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(errorHandler);
 
+const createAdminUser = async () => {
+  const adminExists = await User.findOne({ email: 'admin@workhunt.com' });
+
+  if (!adminExists) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash('Admin@123', salt);
+
+    await User.create({
+      name: 'Admin User',
+      email: 'admin@workhunt.com',
+      password: hashedPassword,
+      role: 'admin',
+    });
+
+    console.log('✅ Admin user created successfully!');
+  }
+};
+
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB Connected'))
+  .then(async () => {
+    console.log('MongoDB Connected');
+    await createAdminUser(); // Auto-create admin user if missing
+  })
   .catch(err => {
     console.error('MongoDB Connection Error:', err);
     process.exit(1);

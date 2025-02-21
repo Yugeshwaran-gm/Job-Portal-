@@ -5,6 +5,11 @@ import Login from './components/Auth/Login';
 import SeekerDashboard from './components/Dashboard/SeekersDashboard';
 import EmployerDashboard from './components/Dashboard/EmployerDashboard';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
+import Navbar from './components/Common/Navbar';
+import JobDetails from './components/Jobs/JobDetails';
+import JobList from './components/Jobs/JobList';
+import JobApplications from './components/Jobs/JobApplications';
+
 
 // ✅ Role-Based Protected Route
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -13,7 +18,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   if (!userRole) return <Navigate to="/login" />; // Redirect if not logged in
 
   if (requiredRole && userRole !== requiredRole) {
-    return <Navigate to="/not-authorized" />; // Redirect if role doesn't match
+    return <Navigate to="/register" />; // Redirect if role doesn't match
   }
 
   return children;
@@ -22,13 +27,16 @@ const ProtectedRoute = ({ children, requiredRole }) => {
 function App() {
   return (
     <Router>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        
+        <Route path="/logout" element={<Login />} />
+        <Route path="/jobs" element={<JobList />} />
+        <Route path="/applications" element={<JobApplications />} />
         {/* ✅ Role-Based Routes */}
-        <Route path="/seeker-dashboard" element={<ProtectedRoute requiredRole="jobseeker"><SeekerDashboard /></ProtectedRoute>} />
+        <Route path="/seeker-dashboard" element={<ProtectedRoute requiredRole="seeker"><SeekerDashboard /></ProtectedRoute>} />
         <Route path="/employer-dashboard" element={<ProtectedRoute requiredRole="employer"><EmployerDashboard /></ProtectedRoute>} />
         <Route path="/admin-dashboard" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
       </Routes>

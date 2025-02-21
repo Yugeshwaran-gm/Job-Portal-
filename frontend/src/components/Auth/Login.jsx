@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Authstyles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -17,6 +20,7 @@ const Login = () => {
       // ✅ Store authentication data in localStorage
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userRole', response.data.role);
+      console.log("Stored Role in Local Storage:", localStorage.getItem('userRole'));
 
       // ✅ Redirect based on role
       if (response.data.role === 'admin') navigate('/admin-dashboard');
@@ -40,13 +44,20 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)} 
           required 
         />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-        />
+        <div className="password-container">
+          <input 
+            type={showPassword ? 'text' : 'password'} 
+            placeholder="Password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
+          <FontAwesomeIcon 
+            icon={showPassword ? faEyeSlash : faEye} 
+            onClick={() => setShowPassword(!showPassword)} 
+            className="password-toggle-icon"
+          />
+        </div>
         <button type="submit">Login</button>
       </form>
       <p>Don't have an account? <a href="/register">Register</a></p>

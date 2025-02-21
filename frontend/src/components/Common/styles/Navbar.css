@@ -1,0 +1,51 @@
+.navbar {
+  background-color: #007bff;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li {
+  margin-left: 1rem; /* Reduced margin to fit more items */
+  margin-right: 1.5rem; /* Reduced margin to fit more items */
+}
+
+.navbar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  color: #ffdd57;
+}
+
+.navbar ul li a:active {
+  color: #ffdd57;
+}
+
+.navbar ul li a:focus {
+  outline: none;
+  color: #ffdd57;
+}
