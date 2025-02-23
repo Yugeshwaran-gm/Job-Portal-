@@ -1,5 +1,5 @@
 import Job from '../models/Job.js';
-
+import mongoose from 'mongoose';
 export const createJob = async (req, res) => {
   try {
     const job = new Job(req.body);
@@ -60,5 +60,22 @@ export const createJobPost = async (req, res) => {
     res.status(201).json(job);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+};
+export const getEmployerJobs = async (req, res) => {
+  try {
+      const employerId = req.user._id;  // ✅ Get employer's ID from `req.user`
+
+      // ✅ Ensure employerId is valid
+      if (!mongoose.Types.ObjectId.isValid(employerId)) {
+          return res.status(400).json({ message: 'Invalid employer ID' });
+      }
+
+      const jobs = await Job.find({ postedBy: employerId }); // ✅ Fix filtering by postedBy
+
+      res.json(jobs);
+  } catch (error) {
+      console.error('Error fetching employer jobs:', error);
+      res.status(500).json({ message: 'Server error fetching jobs' });
   }
 };

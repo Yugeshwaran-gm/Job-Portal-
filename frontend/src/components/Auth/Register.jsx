@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../context/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Authstyles/Register.css';
 
 const Register = () => {
+  const { login } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,8 +28,8 @@ const Register = () => {
         const response = await axios.post('http://localhost:3000/api/users/register', { name, email, password, role });
       
         // ✅ Store token & role in localStorage
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userRole', response.data.role);
+        login(response.data.token, response.data.role);
+
       
         console.log("Registered Role:", response.data.role); // Debugging check
       

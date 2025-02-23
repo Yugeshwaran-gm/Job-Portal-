@@ -1,6 +1,7 @@
 import User from '../models/user.js';
 import generateToken from '../utils/generateToken.js';
 import asyncHandler from 'express-async-handler';
+import bcrypt from 'bcryptjs';
 
 // ✅ Register User
 export const registerUser = asyncHandler(async (req, res) => {
@@ -10,16 +11,17 @@ export const registerUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'User already exists' });
 
-   
+    // // Hash password before saving
+    // const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await User.create({
       name,
       email,
-      password, 
-      role: role || 'seeker'
+      password,
+      role: role || 'seeker',  // Default role is seeker
     });
 
     if (user) {
-      // console.log("Saving data in collection:", User.collection.name);
       res.status(201).json({
         _id: user._id,
         name: user.name,
@@ -35,12 +37,30 @@ export const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// ✅ User Login (Returns role)
+
+// ✅ User Login (Now supports Employer role properly)
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      console.log(`❌ User not found for email: ${email}`);
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Debugging Logs (remove in production)
+    console.log(`✅ User Found: ${user.email}, Role: ${user.role}`);
+
+    // Use matchPassword function from user model
+    const isPasswordMatch = await user.matchPassword(password);
+    
+    if (!isPasswordMatch) {
+      console.log(`❌ Password mismatch for email: ${email}`);
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
     res.json({
       _id: user._id,
       name: user.name,
@@ -48,8 +68,9 @@ export const loginUser = asyncHandler(async (req, res) => {
       role: user.role,
       token: generateToken(user._id),
     });
-  } else {
-    res.status(401).json({ message: 'Invalid email or password' });
+  } catch (error) {
+    console.error('❌ Error during login:', error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 

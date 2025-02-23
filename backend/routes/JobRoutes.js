@@ -5,7 +5,8 @@ import {
     getJobById, 
     updateJob, 
     deleteJob, 
-    createJobPost 
+    createJobPost, 
+    getEmployerJobs  // ✅ Import the new function
 } from '../controllers/jobControllers.js';
 import { protect, authorizeRoles } from '../middleware/authMiddleware.js';
 
@@ -20,5 +21,8 @@ router.delete('/:id', deleteJob);
 
 // 🔹 Job Posting Route (For Employers)
 router.post('/post-job', protect, authorizeRoles('employer'), createJobPost);
+
+// 🔹 **New Route: Get Jobs Posted by Employer**
+router.get('/employer/jobs', protect, authorizeRoles('employer'), getEmployerJobs);
 
 export default router;

@@ -1,3 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-export default (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+const generateToken = (id, role) => {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
+
+export default generateToken;

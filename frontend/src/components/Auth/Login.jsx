@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../context/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Authstyles/Login.css';
 
 const Login = () => {
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,9 +20,8 @@ const Login = () => {
       const response = await axios.post('http://localhost:3000/api/users/login', { email, password });
 
       // ✅ Store authentication data in localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('userRole', response.data.role);
-      console.log("Stored Role in Local Storage:", localStorage.getItem('userRole'));
+      login(response.data.token, response.data.role);
+
 
       // ✅ Redirect based on role
       if (response.data.role === 'admin') navigate('/admin-dashboard');

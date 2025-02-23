@@ -21,21 +21,22 @@ app.use(express.json());
 app.use(cors());
 app.use(errorHandler);
 
+// Ensure admin user is created at startup
 const createAdminUser = async () => {
-  const adminExists = await User.findOne({ email: 'admin@workhunt.com' });
-
-  if (!adminExists) {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('Admin@123', salt);
-
-    await User.create({
-      name: 'Admin User',
-      email: 'admin@workhunt.com',
-      password: hashedPassword,
-      role: 'admin',
-    });
-
-    console.log('✅ Admin user created successfully!');
+  try {
+    const existingAdmin = await User.findOne({ email: 'admin@workhunt.com' });
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash('Admin@123', 10);
+      await User.create({
+        name: 'Admin',
+        email: 'admin@workhunt.com',
+        password: hashedPassword,
+        role: 'admin',
+      });
+      console.log('✅ Admin user created successfully!');
+    }
+  } catch (error) {
+    console.error('Error creating admin user:', error);
   }
 };
 

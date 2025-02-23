@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Navbar from '../Common/Navbar';
 
 const EmployerDashboard = () => {
   const [jobs, setJobs] = useState([]);
@@ -10,12 +11,16 @@ const EmployerDashboard = () => {
     // ✅ Fetch employer's job postings
     const fetchEmployerJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/jobs/employer');
+        const token = localStorage.getItem('token'); // ✅ Include authentication token
+        const response = await axios.get('http://localhost:3000/api/jobs/employer/jobs', {
+          headers: { Authorization: `Bearer ${token}` } 
+        });
         setJobs(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
     };
+    
 
     fetchEmployerJobs();
   }, []);
@@ -32,6 +37,8 @@ const EmployerDashboard = () => {
   };
 
   return (
+    <div>
+      <Navbar role="employer" /> {/* ✅ Navbar visible only for employers */}
     <div style={styles.container}>
       <h2>Employer Dashboard</h2>
       <p>Manage your job postings and applications.</p>
@@ -54,6 +61,7 @@ const EmployerDashboard = () => {
           <p>No job postings yet.</p>
         )}
       </ul>
+    </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
+// authController.js
 import Auth from '../models/Auth.js';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 
@@ -12,31 +13,6 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-export const registerUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new Auth({ email, password: hashedPassword });
-    await newUser.save();
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-export const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await Auth.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-    const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-    res.status(200).json({ token });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
 export const forgotPassword = async (req, res) => {
   try {
