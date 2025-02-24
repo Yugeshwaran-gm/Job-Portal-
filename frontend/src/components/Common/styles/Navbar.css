@@ -20,14 +20,15 @@
 
 .navbar ul {
   list-style: none;
-  display: flex;
+  display: flex; /* ✅ Ensures items are in a row */
+  align-items: center; /* ✅ Aligns everything vertically */
   margin: 0;
   padding: 0;
 }
 
 .navbar ul li {
-  margin-left: 1rem; /* Reduced margin to fit more items */
-  margin-right: 1.5rem; /* Reduced margin to fit more items */
+  margin: 0 1rem;
+  position: relative;
 }
 
 .navbar ul li a {
@@ -37,15 +38,52 @@
   transition: color 0.3s ease;
 }
 
-.navbar ul li a:hover {
-  color: #ffdd57;
-}
-
-.navbar ul li a:active {
-  color: #ffdd57;
-}
-
+.navbar ul li a:hover,
+.navbar ul li a:active,
 .navbar ul li a:focus {
-  outline: none;
   color: #ffdd57;
+  outline: none;
+}
+
+/* 🔹 Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%; /* ✅ Ensures dropdown stays below */
+  left: 0;
+  background-color: rgb(35, 94, 221);
+  min-width: 150px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
 }

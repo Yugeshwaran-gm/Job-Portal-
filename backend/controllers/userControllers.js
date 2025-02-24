@@ -97,14 +97,32 @@ export const getUserById = asyncHandler(async (req, res) => {
 
 // ✅ Update User
 export const updateUser = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  const user = await User.findById(req.user._id); // Only allow updating logged-in user
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    // Handle password update
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      token: generateToken(updatedUser._id), // Re-generate token after update
+    });
+  } else {
+    res.status(404).json({ message: "User not found" });
   }
 });
+
 
 // ✅ Delete User
 export const deleteUser = asyncHandler(async (req, res) => {

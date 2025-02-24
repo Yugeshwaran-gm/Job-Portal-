@@ -1,5 +1,6 @@
 import Job from '../models/Job.js';
-import mongoose from 'mongoose';
+
+// 🔹 Create a Job
 export const createJob = async (req, res) => {
   try {
     const job = new Job(req.body);
@@ -10,6 +11,7 @@ export const createJob = async (req, res) => {
   }
 };
 
+// 🔹 Get All Jobs
 export const getJobs = async (req, res) => {
   try {
     const jobs = await Job.find();
@@ -19,6 +21,7 @@ export const getJobs = async (req, res) => {
   }
 };
 
+// 🔹 Get Job by ID
 export const getJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -29,6 +32,7 @@ export const getJobById = async (req, res) => {
   }
 };
 
+// 🔹 Update Job
 export const updateJob = async (req, res) => {
   try {
     const job = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -39,6 +43,7 @@ export const updateJob = async (req, res) => {
   }
 };
 
+// 🔹 Delete Job
 export const deleteJob = async (req, res) => {
   try {
     const job = await Job.findByIdAndDelete(req.params.id);
@@ -49,33 +54,26 @@ export const deleteJob = async (req, res) => {
   }
 };
 
+// 🔹 Employer Posts a Job
 export const createJobPost = async (req, res) => {
   try {
-    if (req.user.role !== 'employer') {
-      return res.status(403).json({ message: 'Unauthorized: Only employers can post jobs' });
-    }
-
-    const job = new Job({ ...req.body, postedBy: req.user.id });
+    const job = new Job({
+      ...req.body,
+      postedBy: req.user.id // ✅ Use `_id` instead of `id`
+    });
     await job.save();
     res.status(201).json(job);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+// 🔹 Get Jobs Posted by an Employer
 export const getEmployerJobs = async (req, res) => {
   try {
-      const employerId = req.user._id;  // ✅ Get employer's ID from `req.user`
-
-      // ✅ Ensure employerId is valid
-      if (!mongoose.Types.ObjectId.isValid(employerId)) {
-          return res.status(400).json({ message: 'Invalid employer ID' });
-      }
-
-      const jobs = await Job.find({ postedBy: employerId }); // ✅ Fix filtering by postedBy
-
-      res.json(jobs);
+    const jobs = await Job.find({ postedBy: req.user._id }); // ✅ Directly use `_id`
+    res.status(200).json(jobs);
   } catch (error) {
-      console.error('Error fetching employer jobs:', error);
-      res.status(500).json({ message: 'Server error fetching jobs' });
+    res.status(500).json({ error: error.message || 'Server error fetching jobs' });
   }
 };

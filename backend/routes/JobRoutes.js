@@ -8,6 +8,7 @@ import {
     createJobPost, 
     getEmployerJobs  // ✅ Import the new function
 } from '../controllers/jobControllers.js';
+import Job from '../models/Job.js';
 import { protect, authorizeRoles } from '../middleware/authMiddleware.js';
 
 const router = express.Router();

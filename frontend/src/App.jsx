@@ -10,6 +10,9 @@ import Navbar from './components/Common/Navbar';
 import JobDetails from './components/Jobs/JobDetails';
 import JobList from './components/Jobs/JobList';
 import JobApplications from './components/Jobs/JobApplications';
+import ForgotPassword from './components/Auth/ForgotPassword';
+import JobPostForm from './components/Jobs/JobPostForm';
+import ProfileEdit from './components/Users/EditProfile';
 
 // ✅ Role-Based Protected Route with AuthContext
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -42,7 +45,10 @@ function App() {
           <Route path="/logout" element={<Login />} />
           <Route path="/jobs" element={<JobList />} />
           <Route path="/applications" element={<JobApplications />} />
+          <Route path="/post-job" element={<JobPostForm />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           {/* ✅ Role-Based Routes */}
+          <Route path="/profile" element={<ProfileEdit />} />
           <Route path="/seeker-dashboard" element={<ProtectedRoute requiredRole="seeker"><SeekerDashboard /></ProtectedRoute>} />
           <Route path="/employer-dashboard" element={<ProtectedRoute requiredRole="employer"><EmployerDashboard /></ProtectedRoute>} />
           <Route path="/admin-dashboard" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
