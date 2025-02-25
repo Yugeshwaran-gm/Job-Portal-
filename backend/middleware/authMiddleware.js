@@ -1,20 +1,35 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';  // Adjust the path based on your structure
+import User from '../models/user.js'; // Adjust the path based on your structure
 
-// 🔹 Middleware to check if user is authenticated
 const protect = async (req, res, next) => {
   let token = req.headers.authorization;
+
+  console.log("🔍 Received Authorization Header:", token); // ✅ Debugging log
 
   if (token && token.startsWith('Bearer')) {
     try {
       token = token.split(' ')[1];
+
+      console.log("✅ Extracted Token:", token); // ✅ Debugging log
+
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findById(decoded.id).select('-password'); // Attach user info to request
+      console.log("✅ Decoded Token:", decoded); // ✅ Debugging log
+
+      req.user = await User.findById(decoded.id).select('-password');
+
+      if (!req.user) {
+        console.error("❌ User not found in database!");
+        return res.status(401).json({ message: "User not found" });
+      }
+
+      console.log("✅ Authenticated User:", req.user); // ✅ Debugging log
       next();
     } catch (error) {
+      console.error("❌ Token verification failed:", error.message);
       res.status(401).json({ message: 'Not authorized, token failed' });
     }
   } else {
+    console.error("❌ No token provided!");
     res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
@@ -30,3 +45,4 @@ const authorizeRoles = (...roles) => {
 };
 
 export { protect, authorizeRoles };
+

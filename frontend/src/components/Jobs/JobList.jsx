@@ -21,6 +21,7 @@ const JobList = () => {
         <div>
             <Navbar role="seeker" /> {/* Include the Navbar component */}
             <div>JobList</div>
+            
         </div>
     )
 }

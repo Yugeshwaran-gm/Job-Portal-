@@ -5,37 +5,45 @@ import Navbar from '../Common/Navbar';
 
 const EmployerDashboard = () => {
   const [jobs, setJobs] = useState([]);
-  const [applicants, setApplicants] = useState({}); // Store applicant count per job
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchEmployerJobs = async () => {
+    const fetchJobs = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/jobs/employer/jobs', {
-          headers: { Authorization: `Bearer ${token}` }
+        const storedUser = JSON.parse(localStorage.getItem("user")); // 🔍 Parse stored user data
+        const token = storedUser?.token || null; // Extract token safely
+    
+        console.log("🔍 Token in localStorage:", token); // ✅ Debugging log
+    
+        if (!token) {
+          console.error("❌ No token found! Please log in again.");
+          navigate("/login"); // Redirect to login
+          return;
+        }
+    
+        const response = await axios.get("http://localhost:3000/api/jobs/employer/jobs", {
+          headers: { Authorization: `Bearer ${token}` }, // ✅ Correct Authorization header
         });
-        setJobs(response.data);
+    
+        console.log("✅ Jobs response:", response.data);
+    
+        const jobsWithApplicants = await Promise.all(
+          response.data.map(async (job) => {
+            const appResponse = await axios.get(`http://localhost:3000/api/applications/job/${job._id}`);
+            return { ...job, applicantCount: appResponse.data.totalApplications };
+          })
+        );
+    
+        setJobs(jobsWithApplicants);
       } catch (error) {
-        console.error("Error fetching jobs:", error);
+        console.error("❌ Error fetching jobs:", error.response?.data || error.message);
       }
     };
-
-    const fetchApplicantsCount = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/applications/employer', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setApplicants(response.data);
-      } catch (error) {
-        console.error("Error fetching applicants count:", error);
-      }
-    };
-
-    fetchEmployerJobs();
-    fetchApplicantsCount();
+    
+  
+    fetchJobs();
   }, []);
+  
 
   return (
     <div>
@@ -54,7 +62,7 @@ const EmployerDashboard = () => {
             jobs.map((job) => (
               <li key={job._id} style={styles.jobItem}>
                 <strong>{job.title}</strong> at {job.company} <br />
-                <span>Applicants: {applicants[job._id] || 0}</span>
+                <span>Applicants: {job.applicantCount || 0}</span>
                 <br />
                 <button onClick={() => navigate(`/candidates/${job._id}`)}>View Candidates</button>
               </li>

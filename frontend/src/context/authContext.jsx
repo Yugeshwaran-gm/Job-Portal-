@@ -1,30 +1,38 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
-// ✅ Create Context
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    // ✅ Restore user from localStorage on refresh
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  // ✅ Load user from localStorage on reload
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('userRole');
-
-    if (token && role) {
-      setUser({ token, role });
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser)); // ✅ Restore user object on refresh
     }
   }, []);
 
-  const login = (token, role) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('userRole', role);
-    setUser({ token, role });
+  // ✅ Login function with token decoding
+  const login = (token) => {
+    try {
+      const decodedUser = jwtDecode(token);
+      const userData = { id: decodedUser.id, role: decodedUser.role, token };
+
+      localStorage.setItem("user", JSON.stringify(userData)); // ✅ Store full user object
+      setUser(userData);
+    } catch (error) {
+      console.error("❌ Error decoding token:", error);
+    }
   };
 
+  // ✅ Logout function
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userRole');
+    localStorage.removeItem("user");
     setUser(null);
   };
 
@@ -35,4 +43,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// ✅ Custom hook for easy access
 export const useAuth = () => useContext(AuthContext);

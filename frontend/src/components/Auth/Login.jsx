@@ -17,21 +17,24 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/users/login', { email, password });
-
+      const response = await axios.post("http://localhost:3000/api/users/login", { email, password });
+  
+      console.log("✅ Login Response:", response.data);
+  
       // ✅ Store authentication data in localStorage
       login(response.data.token, response.data.role);
-
-
+  
       // ✅ Redirect based on role
-      if (response.data.role === 'admin') navigate('/admin-dashboard');
-      else if (response.data.role === 'employer') navigate('/employer-dashboard');
-      else navigate('/seeker-dashboard');
-
+      if (response.data.role === "admin") navigate("/admin-dashboard");
+      else if (response.data.role === "employer") navigate("/employer-dashboard");
+      else navigate("/seeker-dashboard");
+  
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials');
+      setError(err.response?.data?.message || "Invalid credentials");
+      console.error("❌ Login Error:", err.response?.data);
     }
   };
+  
 
   return (
     <div className="login-container">
