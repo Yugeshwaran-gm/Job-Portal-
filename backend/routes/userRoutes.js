@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginUser, registerUser, getUsers, getUserById, updateUser, deleteUser } from '../controllers/userControllers.js';
+import { loginUser, registerUser, getUsers, getUserById, updateUser, deleteUser, getUserProfile } from '../controllers/userControllers.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -10,5 +10,7 @@ router.get('/', getUsers);
 router.get('/:id', getUserById);
 router.put('/profile', protect, updateUser); // ✅ Only logged-in user can update their profile
 router.delete('/:id', deleteUser);
+router.get('/profile', protect, getUserProfile);
+
 
 export default router;

@@ -20,6 +20,7 @@ const Login = () => {
       const response = await axios.post("http://localhost:3000/api/users/login", { email, password });
   
       console.log("✅ Login Response:", response.data);
+      console.log("✅ API Response:", response.data);
   
       // ✅ Store authentication data in localStorage
       login(response.data.token, response.data.role);

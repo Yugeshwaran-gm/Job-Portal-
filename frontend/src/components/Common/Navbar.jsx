@@ -18,12 +18,13 @@ const Navbar = ({ role }) => {
             <li><Link to="/seeker-dashboard">Dashboard</Link></li>
             <li><Link to="/jobs">Browse Jobs</Link></li>
             <li><Link to="/applications">My Applications</Link></li>
+            <li><Link to="/messages">Messages</Link></li>
             {/* Profile Dropdown */}
             <li className="dropdown">
               <button className="dropbtn" onClick={toggleDropdown}>Profile</button>
               {dropdownOpen && (
                 <div className="dropdown-content">
-                  <Link to="/edit-profile">Edit Profile</Link>
+                  <Link to="/profile">Edit Profile</Link>
                   <Link to="/logout">Logout</Link>
                 </div>
               )}
@@ -35,12 +36,13 @@ const Navbar = ({ role }) => {
             <li><Link to="/employer-dashboard">Dashboard</Link></li>
             <li><Link to="/post-job">Post Job</Link></li>
             <li><Link to="/candidates">View Candidates</Link></li>
+            <li><Link to="/messages">Messages</Link></li>
             {/* Profile Dropdown */}
             <li className="dropdown">
               <button className="dropbtn" onClick={toggleDropdown}>Profile</button>
               {dropdownOpen && (
                 <div className="dropdown-content">
-                  <Link to="/edit-profile">Edit Profile</Link>
+                  <Link to="/profile">Edit Profile</Link>
                   <Link to="/logout">Logout</Link>
                 </div>
               )}
@@ -52,16 +54,17 @@ const Navbar = ({ role }) => {
             <li><Link to="/admin-dashboard">Dashboard</Link></li>
             <li><Link to="/manage-users">Manage Users</Link></li>
             <li><Link to="/site-settings">Site Settings</Link></li>
+            <li><Link to="/logout">Logout</Link></li>
             {/* Profile Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <button className="dropbtn" onClick={toggleDropdown}>Profile</button>
               {dropdownOpen && (
                 <div className="dropdown-content">
-                  <Link to="/edit-profile">Edit Profile</Link>
+                  <Link to="/profile">Edit Profile</Link>
                   <Link to="/logout">Logout</Link>
                 </div>
               )}
-            </li>
+            </li> */}
           </>
         )}
       </ul>

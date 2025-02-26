@@ -13,6 +13,7 @@ import JobApplications from './components/Jobs/JobApplications';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import JobPostForm from './components/Jobs/JobPostForm';
 import ProfileEdit from './components/Users/EditProfile';
+import Messages from './components/Messages/Messages';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
   const { user } = useContext(AuthContext);
@@ -38,6 +39,7 @@ function App() {
         <Route path="/jobs" element={<JobList />} />
         <Route path="/applications" element={<JobApplications />} />
         <Route path="/post-job" element={<JobPostForm />} />
+        <Route path="/messages" element={<Messages />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/profile" element={<ProfileEdit />} />
 

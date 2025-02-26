@@ -18,10 +18,13 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // ✅ Login function with token decoding
-  const login = (token) => {
+  const login = (token, role) => {
     try {
       const decodedUser = jwtDecode(token);
-      const userData = { id: decodedUser.id, role: decodedUser.role, token };
+      console.log("🛠️ Decoded Token:", decodedUser);
+      // const userData = { id: decodedUser.id, role: decodedUser.role, token };
+      const userData = { id: decodedUser.id, role, token };
+      console.log("📌 Storing in localStorage:", userData);
 
       localStorage.setItem("user", JSON.stringify(userData)); // ✅ Store full user object
       setUser(userData);
