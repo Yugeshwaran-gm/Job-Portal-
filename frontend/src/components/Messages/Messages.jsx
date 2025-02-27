@@ -1,14 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useMessages } from "../../context/messagesContext";
 import "./styles/Messages.css";
+import Navbar from '../Common/Navbar';
+
+
 
 const Messages = () => {
+  const [role, setRole] = useState(null);
   const { messages, users, sendMessage, fetchMessages, fetchUsers, updateMessageStatus } = useMessages();
   const [selectedUser, setSelectedUser] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
+  
+  useEffect(() => {
+    try {
+      
+      if (loggedInUser) {
+        const parsedData = JSON.parse(loggedInUser);
+        setRole(parsedData?.role || null);
+      }
+    } catch (error) {
+      console.error("Error parsing user data:", error);
+      setRole(null);
+    }
+  }, []);
 
   useEffect(() => {
+   
     fetchUsers();
   }, []);
 
@@ -53,6 +71,7 @@ const Messages = () => {
   return (
     <div className="chat-container">
       <div className="user-list">
+      {role && <Navbar role={role} />}
         <h3>Users</h3>
         {users
           .filter((user) => user._id !== loggedInUser.id) // ✅ Exclude logged-in user

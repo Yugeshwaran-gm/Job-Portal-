@@ -24,9 +24,9 @@ export const MessageProvider = ({ children }) => {
 
   const fetchMessages = async (sender, receiver) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3000/api/messages?sender=${sender}&receiver=${receiver}`
-      );
+      // const { data } = await axios.get(
+      //   `http://localhost:3000/api/messages?sender=${sender}&receiver=${receiver}`
+      const { data } = await axios.get(`http://localhost:3000/api/messages/${sender}/${receiver}`);  
       setMessages(data);
 
       // ✅ Mark messages as "read" when chat is opened
