@@ -2,11 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Navbar from '../Common/Navbar';
 import { AuthContext } from "../../context/authContext"; // Ensure correct path
+import './styles/SeekersDashboard.css'; // Import the new CSS file
 
 const SeekersDashboard = () => {
   const { user } = useContext(AuthContext);
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [hoveredJobId, setHoveredJobId] = useState(null);
 
   console.log("User in SeekersDashboard:", user);
 
@@ -23,16 +25,16 @@ const SeekersDashboard = () => {
 
     console.log("Fetching applications for user ID:", user.id);
 
-    const fetchApplications = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/applications/user/${user.id}`);
-        setApplications(response.data.map(app => app.jobId._id)); // Store applied job IDs
-      } catch (error) {
-        console.error("Error fetching applications:", error);
-      }
-    };
+    // const fetchApplications = async () => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:3000/api/applications/user/${user.id}`);
+    //     setApplications(response.data.map(app => app.jobId._id)); // Store applied job IDs
+    //   } catch (error) {
+    //     console.error("Error fetching applications:", error);
+    //   }
+    // };
 
-    fetchApplications();
+    // fetchApplications();
   }, [user]);
 
   useEffect(() => {
@@ -78,15 +80,20 @@ const SeekersDashboard = () => {
   return (
     <div>
       <Navbar role="seeker" />
-      <div style={styles.container}>
+      <div className="container">
         <h2>Welcome, Job Seeker!</h2>
         <p>Browse and apply for jobs that match your skills.</p>
 
-        <h3>Available Jobs</h3>
+        {/* <h3>Available Jobs</h3>
         <ul>
           {jobs.length > 0 ? (
             jobs.map((job) => (
-              <li key={job._id} style={styles.jobItem}>
+              <li
+                key={job._id}
+                className={`jobItem ${hoveredJobId === job._id ? 'jobItemHover' : ''}`}
+                onMouseEnter={() => setHoveredJobId(job._id)}
+                onMouseLeave={() => setHoveredJobId(null)}
+              >
                 <strong>{job.title}</strong> at {job.company} <br />
                 <p><strong>Posted by:</strong> {job.postedBy?.name || "Unknown"}</p>
                 <p><strong>Location:</strong> {job.location}</p>
@@ -101,14 +108,14 @@ const SeekersDashboard = () => {
           ) : (
             <p>No job listings available.</p>
           )}
-        </ul>
+        </ul> */}
 
         <h3>Your Applied Jobs</h3>
         {applications.length > 0 ? (
           applications.map((jobId) => {
             const job = jobs.find((j) => j._id === jobId);
             return job ? (
-              <div key={job._id} style={styles.appliedJobCard}>
+              <div key={job._id} className="appliedJobCard">
                 <h3>{job.title}</h3>
                 <p><strong>Company:</strong> {job.company}</p>
                 <p><strong>Location:</strong> {job.location}</p>
@@ -123,19 +130,6 @@ const SeekersDashboard = () => {
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: { textAlign: 'center', padding: '20px', fontFamily: 'Arial, sans-serif' },
-  jobItem: { listStyle: 'none', marginBottom: '10px' },
-  appliedJobCard: {
-    border: '1px solid #ddd',
-    padding: '10px',
-    margin: '10px auto',
-    width: '50%',
-    borderRadius: '5px',
-    backgroundColor: '#f9f9f9'
-  }
 };
 
 export default SeekersDashboard;

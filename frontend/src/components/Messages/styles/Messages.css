@@ -55,4 +55,21 @@
     flex: 1;
     padding: 5px;
   }
+  .message-tick {
+    font-size: 12px;
+    margin-left: 5px;
+    color: gray;
+  }
+  
+  .sent .message-tick {
+    color: gray; /* Sent (✓) */
+  }
+  
+  .sent .message-tick.delivered {
+    color: black; /* Delivered (✓✓) */
+  }
+  
+  .sent .message-tick.read {
+    color: blue; /* Read (✓✓) */
+  }
   

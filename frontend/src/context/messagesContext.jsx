@@ -12,6 +12,9 @@ export const MessageProvider = ({ children }) => {
   useEffect(() => {
     socket.on("receiveMessage", (message) => {
       setMessages((prev) => [...prev, message]);
+
+      // ✅ Mark message as "delivered" when received
+      updateMessageStatus(message._id, "delivered");
     });
 
     return () => {
@@ -25,15 +28,23 @@ export const MessageProvider = ({ children }) => {
         `http://localhost:3000/api/messages?sender=${sender}&receiver=${receiver}`
       );
       setMessages(data);
+
+      // ✅ Mark messages as "read" when chat is opened
+      data.forEach((msg) => {
+        if (msg.receiver === sender && msg.status !== "read") {
+          updateMessageStatus(msg._id, "read");
+        }
+      });
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (loggedInUserId) => {
     try {
       const { data } = await axios.get("http://localhost:3000/api/users");
-      setUsers(data);
+      const filteredUsers = data.filter((user) => user._id !== loggedInUserId);
+      setUsers(filteredUsers);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -45,6 +56,7 @@ export const MessageProvider = ({ children }) => {
         sender,
         receiver,
         content,
+        status: "sent", // ✅ Initially set status to "sent"
       });
 
       socket.emit("sendMessage", data);
@@ -54,8 +66,26 @@ export const MessageProvider = ({ children }) => {
     }
   };
 
+  const updateMessageStatus = async (messageId, status) => {
+    try {
+      await axios.put("http://localhost:3000/api/messages/status", {
+        messageId,
+        status,
+      });
+
+      setMessages((prev) =>
+        prev.map((msg) => (msg._id === messageId ? { ...msg, status } : msg))
+      );
+
+      // ✅ Emit socket event for real-time status updates
+      socket.emit("updateStatus", { messageId, status });
+    } catch (error) {
+      console.error("Error updating message status:", error);
+    }
+  };
+
   return (
-    <MessageContext.Provider value={{ messages, users, sendMessage, fetchMessages, fetchUsers }}>
+    <MessageContext.Provider value={{ messages, users, sendMessage, fetchMessages, fetchUsers, updateMessageStatus }}>
       {children}
     </MessageContext.Provider>
   );

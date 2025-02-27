@@ -47,6 +47,7 @@ const createAdminUser = async () => {
   }
 };
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
     console.log('MongoDB Connected');
@@ -70,8 +71,25 @@ app.use('/api/auth', authRoutes);
 io.on('connection', (socket) => {
   console.log('🟢 User connected:', socket.id);
 
-  socket.on('sendMessage', (message) => {
-    io.emit('receiveMessage', message); // Broadcast to all users
+  // Handle sending messages
+  socket.on('sendMessage', async (message) => {
+    try {
+      // Save message in DB with status 'sent'
+      const newMessage = await Message.create({ ...message, status: 'sent' });
+      io.emit('receiveMessage', newMessage); // Broadcast to all users
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  });
+
+  // 🔹 Handle Message Status Updates
+  socket.on('updateStatus', async ({ messageId, status }) => {
+    try {
+      await Message.findByIdAndUpdate(messageId, { status }, { new: true });
+      io.emit('statusUpdated', { messageId, status }); // Notify all clients
+    } catch (error) {
+      console.error('Error updating message status:', error);
+    }
   });
 
   socket.on('disconnect', () => {
