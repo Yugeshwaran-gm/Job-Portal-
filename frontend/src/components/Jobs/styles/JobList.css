@@ -2,7 +2,7 @@
     background-color: #f3f3f3;
 } */
 .jobListContainer {
-    margin-top: 10010px !important; /* Adjust this if needed */
+    margin-top: 643em !important; /* Adjust this if needed */
     padding: 20px;
   }
   .jobItem {
@@ -30,14 +30,21 @@
   p {
     margin: 5px 0;
   }
-  
+  .button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px;
+}
   button {
     background-color: #007bff;
     color: white;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
-    border-radius: 4px;
+    white-space: normal; /* Allow text to wrap */
+    word-wrap:normal; /* Ensure text wraps inside the button */
+
+    /* border-radius: 4px; */
   }
   
   button:disabled {

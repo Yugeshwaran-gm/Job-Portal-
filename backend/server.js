@@ -83,14 +83,14 @@ io.on('connection', (socket) => {
   });
 
   // 🔹 Handle Message Status Updates
-  socket.on('updateStatus', async ({ messageId, status }) => {
-    try {
-      await Message.findByIdAndUpdate(messageId, { status }, { new: true });
-      io.emit('statusUpdated', { messageId, status }); // Notify all clients
-    } catch (error) {
-      console.error('Error updating message status:', error);
-    }
-  });
+  // socket.on('updateStatus', async ({ messageId, status }) => {
+  //   try {
+  //     await Message.findByIdAndUpdate(messageId, { status }, { new: true });
+  //     io.emit('statusUpdated', { messageId, status }); // Notify all clients
+  //   } catch (error) {
+  //     console.error('Error updating message status:', error);
+  //   }
+  // });
 
   socket.on('disconnect', () => {
     console.log('🔴 User disconnected:', socket.id);

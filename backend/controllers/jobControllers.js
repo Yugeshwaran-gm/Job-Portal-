@@ -15,9 +15,11 @@ export const createJob = async (req, res) => {
 export const getJobs = async (req, res) => {
   try {
     const jobs = await Job.find()
-      .populate("postedBy", "name email") // Fetch user name & email
+      // .populate("postedBy", "name email")
+      //  // Fetch user name & email
+      .populate("postedBy", "name email")
       .select("title company location salary description createdAt postedBy"); // Ensure all required fields are included
-
+      console.log("🔍 Jobs Fetched from DB:", jobs)
     res.status(200).json(jobs);
   } catch (error) {
     res.status(500).json({ error: error.message });
