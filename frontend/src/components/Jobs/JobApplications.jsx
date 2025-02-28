@@ -15,6 +15,13 @@ const JobApplications = () => {
         const response = await axios.get(`http://localhost:3000/api/applications/user/${user.id}`);
         
         console.log("Applications response:", response.data);
+        applications.forEach(app => {
+          if (!app.jobId) {
+            console.warn(`⚠️ Job not found for Application ID: ${app._id}`);
+          } else {
+            console.log(`📌 Found Job: ${app.jobId._id} - ${app.jobId.title}`);
+          }
+        });
         
         if (!response.data || response.data.length === 0) {
           console.warn("⚠️ No applications found for user.");
@@ -29,7 +36,7 @@ const JobApplications = () => {
     const fetchJobs = async () => {
       try {
         console.log("🔄 Fetching all jobs...");
-        const response = await axios.get("http://localhost:3000/api/jobs"); // Adjust API route if necessary
+        const response = await axios.get("http://localhost:3000/api/applications"); // Adjust API route if necessary
         console.log("Jobs response:", response.data);
         setJobs(response.data);
       } catch (error) {

@@ -75,18 +75,23 @@ const JobList = () => {
               onMouseEnter={() => setHoveredJobId(job._id)}
               onMouseLeave={() => setHoveredJobId(null)}
             >
-              <strong>{job.title}</strong> at {job.company} <br />
-              <p><strong>Posted by:</strong> {job.postedBy?.name || "Admin"}</p>
-              <p><strong>Location:</strong> {job.location}</p>
-              <p><strong>Salary:</strong> ₹{job.salary} PCM</p>
-              <p><strong>Posted on:</strong> {new Date(job.createdAt).toLocaleDateString()}</p>
-              <p><strong>Description:</strong> {job.description}</p>
+              <center>
+              <strong>{job.title} </strong>
+              <strong>at {job.company}</strong> 
+              </center>
+              <p><strong>Posted by: {job.postedBy?.name || "Admin"}</strong></p>
+              <p><strong>Location: {job.location}</strong></p>
+              <p><strong>Salary: ₹{job.salary} </strong></p>
+              <p><strong>Posted on: {new Date(job.createdAt).toLocaleDateString()}</strong></p>
+              <p><strong>Description: {job.description}</strong></p>
+              <center>
               <div className="button-container">
                 <button onClick={() => handleApply(job._id)} disabled={applications.includes(job._id)}>
                   {applications.includes(job._id) ? "Applied" : "Apply"}
                 </button>
                 <button onClick={() => handleMessage(job.postedBy)}>Message</button>
               </div>
+              </center>
               {/* <button onClick={() => handleApply(job._id)} disabled={applications.includes(job._id)}>
                 {applications.includes(job._id) ? "Applied" : "Apply"}
               </button>

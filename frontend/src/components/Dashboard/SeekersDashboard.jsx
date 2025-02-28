@@ -82,7 +82,7 @@ const SeekersDashboard = () => {
       <Navbar role="seeker" />
       <div className="container">
         <h2>Welcome, Job Seeker!</h2>
-        <p>Browse and apply for jobs that match your skills.</p>
+        <strong><p>Browse and apply for jobs that match your skills.</p></strong>
 
         {/* <h3>Available Jobs</h3>
         <ul>

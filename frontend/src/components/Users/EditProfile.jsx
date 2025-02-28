@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../Common/Navbar";
+import "./styles/EditProfile.css";
 
 const ProfileEdit = () => {
   const [name, setName] = useState("");
@@ -91,16 +92,36 @@ const ProfileEdit = () => {
         <p>Loading...</p>
       ) : (
         <form onSubmit={handleSubmit}>
-          <label>Name:</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-          <label>New Password (optional):</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-          <button type="submit">Update Profile</button>
+          <fieldset>
+            <legend>Profile Information</legend>
+            <table>
+              <tbody>
+                <tr>
+                  <td><label>Name:</label></td>
+                  <td>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Email:</label></td>
+                  <td>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>New Password (optional):</label></td>
+                  <td>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan="2" className="button-container">
+                    <button type="submit">Update Profile</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
         </form>
       )}
     </div>

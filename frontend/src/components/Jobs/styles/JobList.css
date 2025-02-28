@@ -2,7 +2,7 @@
     background-color: #f3f3f3;
 } */
 .jobListContainer {
-    margin-top: 643em !important; /* Adjust this if needed */
+    margin-top: 475em !important; /* Adjust this if needed */
     padding: 20px;
   }
   .jobItem {
@@ -34,6 +34,8 @@
     display: flex;
     gap: 10px; /* Space between buttons */
     margin-top: 10px;
+    justify-content: center;
+    
 }
   button {
     background-color: #007bff;
@@ -43,12 +45,15 @@
     cursor: pointer;
     white-space: normal; /* Allow text to wrap */
     word-wrap:normal; /* Ensure text wraps inside the button */
-
+    
     /* border-radius: 4px; */
   }
   
   button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+  button:hover {
+    background-color: #0056b3;
   }
   
