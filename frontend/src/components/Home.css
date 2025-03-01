@@ -1,23 +1,13 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: url('../assets/officeenvironment.jpg') no-repeat center center fixed; /* Ensure the correct path to your image */
-  background-size: cover;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   text-align: center;
   padding: 50px;
-  margin: 2rem;
+  margin-top: 5rem;
   position: relative;
   background: rgba(255, 255, 255, 0.2); /* White with opacity for glass effect */
   backdrop-filter: blur(10px); /* Glass effect */

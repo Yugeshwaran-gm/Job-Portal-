@@ -104,7 +104,7 @@ export const getApplicationsForUser = async (req, res) => {
 
   try {
     const applications = await Application.find({ userId })
-      .populate({ path: "jobId", select: "title company location salary" });
+      .populate({ path: "jobId", select: "title company location salary employer" });
 
     if (!applications.length) {
       console.warn("⚠️ No applications found for user:", userId);
@@ -124,6 +124,7 @@ export const getApplicationsForUser = async (req, res) => {
     res.status(500).json({ error: "Server error fetching applications" });
   }
 };
+
 
 
 // Update application
@@ -169,5 +170,31 @@ export const getUserApplications = async (req, res) => {
   } catch (error) {
     console.error("❌ Error fetching user applications:", error);
     res.status(500).json({ message: "Error fetching applications" });
+  }
+};
+
+export const updateApplicationStatus = async (req, res) => {
+  try {
+    const { status } = req.body; // "Accepted" or "Rejected"
+    const { id } = req.params;
+
+    if (!["Accepted", "Rejected"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" });
+    }
+
+    const updatedApplication = await Application.findByIdAndUpdate(
+      id,
+      { applicationStatus: status },
+      { new: true }
+    ).populate("userId", "name email");
+
+    if (!updatedApplication) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    res.status(200).json({ message: `Application ${status} successfully`, application: updatedApplication });
+  } catch (error) {
+    console.error("❌ Error updating application status:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

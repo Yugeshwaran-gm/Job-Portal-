@@ -2,7 +2,7 @@
     background-color: #f3f3f3;
 } */
 .jobListContainer {
-    margin-top: 475em !important; /* Adjust this if needed */
+    margin-top: 40px !important; /* Adjust this if needed */
     padding: 20px;
   }
   .jobItem {

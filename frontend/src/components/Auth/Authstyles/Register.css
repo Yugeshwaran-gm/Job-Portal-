@@ -1,17 +1,22 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
   margin: 0;
   padding: 0;
-  display: flex;
+  display: flex; 
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
+} */
 
 .register-container {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
+  /* display: column; */
+  justify-content: center;
+  align-items: center;
+  margin-top: 250px;
+  margin-left: 200px;
   padding: 2rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);

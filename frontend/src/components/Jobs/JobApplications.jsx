@@ -2,10 +2,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import Navbar from '../Common/Navbar';
 import axios from 'axios';
 import { AuthContext } from '../../context/authContext';
+import './styles/JobApplication.css';
 
 const JobApplications = () => {
   const { user } = useContext(AuthContext);
-  const [jobs, setJobs] = useState([]);  // Store full job details
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
@@ -14,66 +14,44 @@ const JobApplications = () => {
         console.log("🔄 Fetching applications for user:", user.id);
         const response = await axios.get(`http://localhost:3000/api/applications/user/${user.id}`);
         
-        console.log("Applications response:", response.data);
-        applications.forEach(app => {
-          if (!app.jobId) {
-            console.warn(`⚠️ Job not found for Application ID: ${app._id}`);
-          } else {
-            console.log(`📌 Found Job: ${app.jobId._id} - ${app.jobId.title}`);
-          }
-        });
-        
         if (!response.data || response.data.length === 0) {
           console.warn("⚠️ No applications found for user.");
         }
-        
-        setApplications(response.data); // Store full application details
+
+        setApplications(response.data);
       } catch (error) {
         console.error("Error fetching applications:", error);
       }
     };
 
-    const fetchJobs = async () => {
-      try {
-        console.log("🔄 Fetching all jobs...");
-        const response = await axios.get("http://localhost:3000/api/applications"); // Adjust API route if necessary
-        console.log("Jobs response:", response.data);
-        setJobs(response.data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
     if (user) {
       fetchApplications();
-      fetchJobs();
     }
   }, [user]);
 
   return (
     <div>
       <Navbar role="seeker" />
-      <div>Job Applications</div>
+    <div className='jobContainer1'>
+      <div >Job Applications</div>
       {applications.length > 0 ? (
-        applications.map((app) => {
-          console.log("Checking job application:", app);
-
-          const job = jobs.find((j) => j._id === app.jobId?._id);
-          if (!job) console.warn("⚠️ Job not found for ID:", app.jobId?._id);
-
-          return job ? (
-            <div key={job._id} className="appliedJobCard">
-              <h3>{job.title}</h3>
-              <p><strong>Company:</strong> {job.company}</p>
-              <p><strong>Location:</strong> {job.location}</p>
-              <p><strong>Salary:</strong> {job.salary}</p>
-              <p><strong>Posted by:</strong> {job.employer?.name || "Unknown"}</p>
+        applications.map((app) => (
+          app.jobId ? (
+            <div key={app.jobId._id} className="appliedJobCard">
+              <h3>{app.jobId.title}</h3>
+              <p><strong>Company:</strong> {app.jobId.company}</p>
+              <p><strong>Location:</strong> {app.jobId.location}</p>
+              <p><strong>Salary:</strong> {app.jobId.salary}</p>
+              <p><strong>Posted by:</strong> {app.jobId.employer?.name || "Admin"}</p>
             </div>
-          ) : null;
-        })
+          ) : (
+            <p key={app._id} className="error">⚠️ Job not found for this application.</p>
+          )
+        ))
       ) : (
         <p>You have not applied for any jobs yet.</p>
       )}
+    </div>
     </div>
   );
 };

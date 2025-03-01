@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Common/Navbar';
+import "./styles/JobPostForm.css";
 
 const JobPostForm = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const JobPostForm = () => {
     <div>
       <Navbar role="employer" />
       <form onSubmit={postJob}>
-        <fieldset>
+        <fieldset className='Filedset'>
           <legend>Post Job</legend>
           <table>
             <tbody>

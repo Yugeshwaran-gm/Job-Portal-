@@ -14,6 +14,7 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 import JobPostForm from './components/Jobs/JobPostForm';
 import ProfileEdit from './components/Users/EditProfile';
 import Messages from './components/Messages/Messages';
+import AppliedCandidates from './components/Jobs/AppliedCandidates';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
   const { user } = useContext(AuthContext);
@@ -42,6 +43,7 @@ function App() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/profile" element={<ProfileEdit />} />
+        <Route path="/candidates" element={<AppliedCandidates />} />
 
         {/* ✅ Seeker Dashboard with Explicit user ? Check */}
         <Route path="/seeker-dashboard" element={

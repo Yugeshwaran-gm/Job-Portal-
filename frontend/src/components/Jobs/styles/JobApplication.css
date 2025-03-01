@@ -1,0 +1,37 @@
+
+  .JobContainer1{
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    margin-top: 4750em !important;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .appliedJobCard {
+    display:grid;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 50px;;
+    /* width: 100%; */
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .appliedJobCard h3 {
+    margin-top: 0;
+  }
+  
+  .appliedJobCard p {
+    margin: 5px 0;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px auto;
+  }
+  
+  .navbar {
+    margin-bottom: 20px;
+  }

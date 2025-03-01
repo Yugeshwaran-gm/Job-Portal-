@@ -1,5 +1,5 @@
 import express from 'express';
-import { applyJob, getApplications, getApplicationById, updateApplication, deleteApplication, getApplicationsForJob,getApplicationsForUser  } from '../controllers/applicationController.js';
+import { applyJob, getApplications, getApplicationById, updateApplication, deleteApplication, getApplicationsForJob,getApplicationsForUser, updateApplicationStatus  } from '../controllers/applicationController.js';
 
 const router = express.Router();
 
@@ -10,4 +10,7 @@ router.get('/job/:jobId', getApplicationsForJob);
 router.get('/:id', getApplicationById);
 router.put('/:id', updateApplication);
 router.delete('/:id', deleteApplication);
+router.put("/update-status/:id", updateApplicationStatus);
+
+
 export default router;
