@@ -1,16 +1,20 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
-  /* background: linear-gradient(135deg, #f5f7fa, #c3cfe2); */
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
   margin: 0;
   padding: 0;
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
+} */
 
 .login-container {
+  align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.2);
+  margin-top: 200px;
+  margin-left: 500px;
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

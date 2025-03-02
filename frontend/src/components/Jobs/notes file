@@ -1,0 +1,33 @@
+// const handleRemove = async (appId) => {
+  //   try {
+  //     await axios.delete(`http://localhost:3000/api/applications/${appId}`);
+  //     setCandidates(prev => prev.filter(app => app._id !== appId));
+  //   } catch (error) {
+  //     console.error("Error removing application:", error);
+  //   }
+  // };
+
+  // const handleStatusChange = async (appId, status) => {
+  //   try {
+  //     await axios.put(`http://localhost:3000/api/applications/update-status/${appId}`, { status });
+  //     setCandidates(prev =>
+  //       prev.map(app => app._id === appId ? { ...app, applicationStatus: status } : app)
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating status:", error);
+  //   }
+  // };
+
+//   {candidate.applicationStatus === "Pending" && (
+//     <>
+//       <button onClick={() => handleStatusChange(candidate._id, "Accepted")} className="accept-btn">
+//         ✅ Accept
+//       </button>
+//       <button onClick={() => handleStatusChange(candidate._id, "Rejected")} className="reject-btn">
+//         ❌ Reject
+//       </button>
+//     </>
+//   )}
+//   <button onClick={() => handleRemove(candidate._id)} className="remove-btn">
+//     🗑 Remove
+//   </button>

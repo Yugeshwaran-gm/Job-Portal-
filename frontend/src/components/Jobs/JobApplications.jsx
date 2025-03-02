@@ -37,12 +37,18 @@ const JobApplications = () => {
       {applications.length > 0 ? (
         applications.map((app) => (
           app.jobId ? (
+            console.log("jobid:", app.jobId),
             <div key={app.jobId._id} className="appliedJobCard">
               <h3>{app.jobId.title}</h3>
               <p><strong>Company:</strong> {app.jobId.company}</p>
               <p><strong>Location:</strong> {app.jobId.location}</p>
               <p><strong>Salary:</strong> {app.jobId.salary}</p>
-              <p><strong>Posted by:</strong> {app.jobId.employer?.name || "Admin"}</p>
+              <p><strong>Posted by:</strong> {app.jobId.name?.name || "Admin"}</p>
+              <p><strong>Status:</strong> 
+              <span className={`status-badge ${app.status.toLowerCase()}`}>
+                    {app.status}
+                  </span>
+              </p>
             </div>
           ) : (
             <p key={app._id} className="error">⚠️ Job not found for this application.</p>

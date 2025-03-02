@@ -74,27 +74,40 @@ export const getApplicationById = async (req, res) => {
 export const getApplicationsForJob = async (req, res) => {
   try {
     const { jobId } = req.params;
-    console.log("🔄 Fetching applications for job:", jobId);
+    console.log("Fetching applications for job1:", jobId);
 
     const applications = await Application.find({ jobId })
-      .populate("userId", "name email") // ✅ Get user details
-      .populate("jobId", "title company description location salary");
+      .populate("userId", "name email") // Populate user details
+      .populate("jobId", "title"); // Populate job details
 
-    applications.forEach(app => {
-      if (!app.jobId) {
-        console.warn(`⚠️ Job not found for Application ID: ${app._id}`);
-      } else {
-        console.log("📌 Checking Job ID:", app.jobId);
-      }
+    console.log("Raw Applications Data from DB:", applications);
+
+    // Format applications
+    const formattedApplications = applications.map((app) => {
+      console.log(`Processing Application ID: ${app._id}`);
+      console.log(`User ID: ${app.userId}`); // Debugging userId
+      console.log(`User Name: ${app.userId?.name}`); // Check if populated
+      console.log(`User Email: ${app.userId?.email}`); // Check if populated
+
+      return {
+        applicationId: app._id,
+        name: app.userId?.name || "Unknown",
+        email: app.userId?.email || "Unknown",
+        status: app.status,
+        appliedAt: app.appliedAt,
+      };
     });
 
-    console.log("✅ Applications fetched:", applications.length);
-    res.status(200).json({ totalApplications: applications.length, applications });
+    console.log("Formatted Applications:", formattedApplications);
+
+    res.status(200).json({ totalApplications: formattedApplications.length, applications: formattedApplications });
   } catch (error) {
-    console.error("❌ Error fetching applicants:", error);
+    console.error("Error fetching applicants:", error);
     res.status(500).json({ message: "Error fetching applicants" });
   }
 };
+
+
 
 // Get applications for a specific seeker (For Seekers Dashboard)
 // Get applications for a specific seeker (For Seekers Dashboard)
@@ -104,7 +117,7 @@ export const getApplicationsForUser = async (req, res) => {
 
   try {
     const applications = await Application.find({ userId })
-      .populate({ path: "jobId", select: "title company location salary employer" });
+      .populate({ path: "jobId", select: "name title company location salary employer status" });
 
     if (!applications.length) {
       console.warn("⚠️ No applications found for user:", userId);
@@ -175,16 +188,16 @@ export const getUserApplications = async (req, res) => {
 
 export const updateApplicationStatus = async (req, res) => {
   try {
-    const { status } = req.body; // "Accepted" or "Rejected"
+    const { status } = req.body;
     const { id } = req.params;
-
+    console.log("🔍 Received Application ID:", id);
     if (!["Accepted", "Rejected"].includes(status)) {
       return res.status(400).json({ message: "Invalid status value" });
     }
 
     const updatedApplication = await Application.findByIdAndUpdate(
       id,
-      { applicationStatus: status },
+      { status },
       { new: true }
     ).populate("userId", "name email");
 
@@ -196,5 +209,41 @@ export const updateApplicationStatus = async (req, res) => {
   } catch (error) {
     console.error("❌ Error updating application status:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+//function to get job postings by the employer along with the seekers who applied.
+
+export const getEmployerJobsWithCandidates = async (req, res) => {
+  try {
+    const employerId = req.user.id; // Assuming authentication middleware sets req.user
+
+    // Fetch jobs posted by the employer
+    const jobs = await Job.find({ postedBy: employerId });
+
+    // Get applications for each job
+    const jobsWithApplicants = await Promise.all(
+      jobs.map(async (job) => {
+        const applications = await Application.find({ jobId: job._id })
+          .populate("userId", "name email"); // Populate user details
+
+        return {
+          ...job._doc,
+          applicantCount: applications.length,
+          applicants: applications.map(app => ({
+            seekerId: app.userId._id,
+            name: app.userId.name,
+            email: app.userId.email,
+            status: app.status,
+            appliedAt: app.appliedAt,
+          }))
+        };
+      })
+    );
+
+    res.status(200).json(jobsWithApplicants);
+  } catch (error) {
+    console.error("❌ Error fetching employer jobs with candidates:", error);
+    res.status(500).json({ message: "Error fetching data" });
   }
 };

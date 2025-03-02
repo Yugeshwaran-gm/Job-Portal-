@@ -15,8 +15,8 @@
   /* display: column; */
   justify-content: center;
   align-items: center;
-  margin-top: 250px;
-  margin-left: 200px;
+  margin-top: 200px;
+  margin-left: 500px;
   padding: 2rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);

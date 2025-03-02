@@ -64,7 +64,7 @@ const EmployerDashboard = () => {
                 <strong>{job.title}</strong> at {job.company} <br />
                 <span>Applicants: {job.applicantCount || 0}</span>
                 <br />
-                <button onClick={() => navigate(`/candidates/${job._id}`)}>View Candidates</button>
+                <button onClick={() => navigate(`/candidates/`)}>View Candidates</button>
               </li>
             ))
           ) : (

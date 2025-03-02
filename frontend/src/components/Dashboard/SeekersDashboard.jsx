@@ -110,7 +110,7 @@ const SeekersDashboard = () => {
           )}
         </ul> */}
 
-        <h3>Your Applied Jobs</h3>
+        {/* <h3>Your Applied Jobs</h3>
         {applications.length > 0 ? (
           applications.map((jobId) => {
             const job = jobs.find((j) => j._id === jobId);
@@ -126,7 +126,7 @@ const SeekersDashboard = () => {
           })
         ) : (
           <p>You have not applied for any jobs yet.</p>
-        )}
+        )} */}
       </div>
     </div>
   );
