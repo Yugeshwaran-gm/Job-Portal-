@@ -115,6 +115,7 @@ const ProfileEdit = () => {
                   </td>
                 </tr>
                 <tr>
+                  <td></td>
                   <td colSpan="2" className="button-container">
                     <button type="submit">Update Profile</button>
                   </td>

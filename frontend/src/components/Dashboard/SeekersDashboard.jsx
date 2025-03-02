@@ -78,7 +78,7 @@ const SeekersDashboard = () => {
   };
 
   return (
-    <div>
+    <div className="background1">
       <Navbar role="seeker" />
       <div className="container">
         <h2>Welcome, Job Seeker!</h2>

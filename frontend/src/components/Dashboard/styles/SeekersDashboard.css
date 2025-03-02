@@ -9,12 +9,19 @@
     height: 100vh;
     background: #f0f0f0; /* Optional: Add a background color /
      } */
+/* .background1 {
+    background-image: url("E:\job portal platform\frontend\src\assets\officeenvironment.jpg");
+    background-size: cover;
+    background-position: center;
+     background-repeat: no-repeat; 
+     }*/
 
      .container {
         text-align: center;
         margin-top: 240px;
         padding: 20px;
         font-family: Arial, sans-serif;
+        /* background-image: url("E:\job portal platform\frontend\src\assets\officeenvironment.jpg"); */
       }
       .h2{
         text-align: center;

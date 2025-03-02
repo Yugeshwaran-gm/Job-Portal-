@@ -1,7 +1,8 @@
 
   .JobContainer1{
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    margin-top: 4750em !important;
+    /* margin-top: 4750em !important; */
+    margin-top: 80px;
     padding: 20px;
     width: 100%;
   }

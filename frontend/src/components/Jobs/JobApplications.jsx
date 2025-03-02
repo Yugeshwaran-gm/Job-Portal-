@@ -32,8 +32,12 @@ const JobApplications = () => {
   return (
     <div>
       <Navbar role="seeker" />
+      <br/>
     <div className='jobContainer1'>
       <div >Job Applications</div>
+      <center>
+      <h3>Applied Jobs</h3>
+      </center>
       {applications.length > 0 ? (
         applications.map((app) => (
           app.jobId ? (
