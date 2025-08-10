@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Navigation for login redirection
 import Navbar from "../Common/Navbar";
+import "./styles/AppliedCandidates.css";
 
 const AppliedCandidates = () => {
   const [jobs, setJobs] = useState([]);
@@ -119,21 +120,21 @@ const AppliedCandidates = () => {
 
           {job.applicants && job.applicants.length > 0 ? (
             <ul>
-              {job.applicants.map((applicant, index) => {
+              {job.applicants.map((applicant) => {
                 console.log("Jobs with applicants:", job.applicants);
                 console.log("Applicant Data:", applicant); // Debugging log
                 // console.log("Applicant ID:", applicant._id); // Debugging
                 console.log("Applicant ID:", applicant.applicationId); // Debugging
 
                 return (
-                  <li key={applicant._id } className="applicant-card">
+                  <li key={applicant.applicationId || applicant._id} className="applicant-card">
                     <p><strong>Name:</strong> {applicant.name}</p>
                     <p><strong>Email:</strong> {applicant.email}</p>
                     <p><strong>Status:</strong> {applicant.status || "Pending"}</p> {/* ✅ Status Added */}
                     <p><strong>Applied At:</strong> {applicant.appliedAt ? new Date(applicant.appliedAt).toLocaleDateString() : "N/A"}</p>
 
-                    <button onClick={() => updateApplicationStatus(applicant.applicationId, "Accepted")} className="accept-btn">
-                      Accept
+                    <button onClick={() => updateApplicationStatus(applicant.applicationId, "Approved")} className="accept-btn">
+                      Approve
                     </button>
                     <button onClick={() => updateApplicationStatus(applicant.applicationId, "Rejected")} className="reject-btn">
                       Reject

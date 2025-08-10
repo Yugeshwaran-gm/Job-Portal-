@@ -1,0 +1,47 @@
+.manageUsersContainer {
+    margin-top: 40px !important;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.userCards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.userCard {
+  background: #f9f9f9; /* light gray default */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-size: 1.05rem;
+}
+
+.userCard:hover {
+  transform: translateY(-3px);
+  background: #fff; /* pure white on hover */
+}
+
+.userActions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.deleteBtn {
+  background: #e63946;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+.deleteBtn:hover {
+  background: #d62828;
+}

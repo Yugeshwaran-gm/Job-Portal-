@@ -53,7 +53,7 @@ const Navbar = ({ role }) => {
           <>
             <li><Link to="/admin-dashboard">Dashboard</Link></li>
             <li><Link to="/manage-users">Manage Users</Link></li>
-            <li><Link to="/site-settings">Site Settings</Link></li>
+            <li><Link to="/manage_jobs">Manage Jobs</Link></li>
             <li><Link to="/logout">Logout</Link></li>
             {/* Profile Dropdown */}
             {/* <li className="dropdown">

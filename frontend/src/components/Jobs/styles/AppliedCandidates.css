@@ -1,0 +1,105 @@
+/* AppliedCandidates.css */
+
+/* Container styling */
+.job-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    background: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px;
+}
+
+/* Job title styling */
+.job-card h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 22px;
+    text-align: center;
+}
+
+/* Job details */
+.job-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Applicants list */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.applicant-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f9f9f9;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Applicant details */
+.applicant-card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Button container */
+.applicant-card button {
+    margin-right: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Button styling */
+.accept-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.reject-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.remove-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Button hover effects */
+.accept-btn:hover {
+    background-color: #218838;
+}
+
+.reject-btn:hover {
+    background-color: #c82333;
+}
+
+.remove-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .job-card {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .applicant-card {
+        padding: 10px;
+    }
+
+    .applicant-card button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

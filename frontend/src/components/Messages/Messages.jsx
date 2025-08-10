@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useMessages } from "../../context/messagesContext";
 import "./styles/Messages.css";
 import Navbar from "../Common/Navbar";
@@ -8,6 +8,9 @@ const Messages = () => {
   const { messages, users, sendMessage, fetchMessages, fetchUsers, updateMessageStatus } = useMessages();
   const [selectedUser, setSelectedUser] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+
+  // ✅ Auto-scroll reference
+  const messagesEndRef = useRef(null);
 
   // ✅ Ensure user data is properly parsed
   const loggedInUser = JSON.parse(localStorage.getItem("user") || "{}");
@@ -26,15 +29,20 @@ const Messages = () => {
     if (selectedUser) {
       fetchMessages(loggedInUser.id, selectedUser._id);
 
-      // ✅ Mark messages as 'read'
+      // ✅ Mark messages as 'read' when opened
       messages.forEach((msg) => {
         if (msg.receiver === loggedInUser.id && msg.status !== "read") {
           updateMessageStatus(msg._id, "read");
         }
       });
     }
-  }, [selectedUser, messages]);
+  }, [selectedUser]); // ✅ Only trigger when selected user changes
 
+  // ✅ Auto-scroll to the latest message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [messages]);
+  
   const handleSend = async () => {
     if (!newMessage.trim() || !selectedUser) return;
 
@@ -57,9 +65,9 @@ const Messages = () => {
         {role && <Navbar role={role} />}
         <h3>Users</h3>
         {users
-          .filter((user) => user._id !== loggedInUser.id)
+          .filter((user) => user._id !== loggedInUser.id && user.role !== "admin")
           .map((user) => (
-            <div key={user._id} onClick={() => setSelectedUser(user)} className="user-item">
+            <div key={user._id} onClick={() => setSelectedUser(user)} className={`user-item ${selectedUser?._id === user._id ? "selected" : ""}`}>
               {user.name}
             </div>
           ))}
@@ -72,6 +80,7 @@ const Messages = () => {
               {msg.content}
             </div>
           ))}
+          <div ref={messagesEndRef} /> {/* ✅ Auto-scroll target */}
         </div>
         <div className="message-input">
           <input

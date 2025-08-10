@@ -10,6 +10,8 @@ const JobList = () => {
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [hoveredJobId, setHoveredJobId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState({ location: '', minSalary: '', maxSalary: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,8 +19,9 @@ const JobList = () => {
       try {
         const response = await axios.get("http://localhost:3000/api/jobs/get");
         console.log("✅ Jobs fetched:", response.data);
-        console.log("Job Data:", response.data);
-        setJobs(response.data);
+
+        const sortedJobs = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setJobs(sortedJobs);
       } catch (error) {
         console.error("❌ Error fetching jobs:", error.response?.data || error.message);
       }
@@ -38,10 +41,7 @@ const JobList = () => {
       return;
     }
 
-    const applicationData = {
-      jobId,
-      userId: user.id,
-    };
+    const applicationData = { jobId, userId: user.id };
 
     try {
       await axios.post("http://localhost:3000/api/applications", applicationData);
@@ -52,50 +52,82 @@ const JobList = () => {
       alert(error.response?.data?.message || "Error applying for the job.");
     }
   };
+
   const handleMessage = (postedBy) => {
     if (!user || !user.id) {
       alert("Please log in to send a message.");
       return;
     }
-
     navigate('/messages', { state: { selectedUser: postedBy } });
   };
 
+  // 🔽 Filter and Search Logic
+  const filteredJobs = jobs.filter(job =>
+    job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    job.company.toLowerCase().includes(searchQuery.toLowerCase())
+  ).filter(job =>
+    (!filters.location || job.location.toLowerCase().includes(filters.location.toLowerCase())) &&
+    (!filters.minSalary || job.salary >= Number(filters.minSalary)) &&
+    (!filters.maxSalary || job.salary <= Number(filters.maxSalary))
+  );
+
   return (
     <div className='jobListContainer'>
-      <Navbar role="seeker" /> {/* Include the Navbar component */}
-      {/* <div>JobList</div> */}
+      <Navbar role="seeker" />
       <h3>Available Jobs</h3>
+
+      {/* 🔎 Search & Filter Options */}
+      <div className="filters">
+        <input 
+          type="text" 
+          placeholder="Search jobs..." 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+        />
+        <input 
+          type="text" 
+          placeholder="Location" 
+          value={filters.location} 
+          onChange={(e) => setFilters({ ...filters, location: e.target.value })} 
+        />
+        <input 
+          type="number" 
+          placeholder="Min Salary" 
+          value={filters.minSalary} 
+          onChange={(e) => setFilters({ ...filters, minSalary: e.target.value })} 
+        />
+        <input 
+          type="number" 
+          placeholder="Max Salary" 
+          value={filters.maxSalary} 
+          onChange={(e) => setFilters({ ...filters, maxSalary: e.target.value })} 
+        />
+      </div>
+
       <ul>
-        {jobs.length > 0 ? (
-          jobs.map((job) => (
-            <li
-              key={job._id}
-              className={`jobItem ${hoveredJobId === job._id ? 'jobItemHover' : ''}`}
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job) => (
+            <li key={job._id} className={`jobItem ${hoveredJobId === job._id ? 'jobItemHover' : ''}`}
               onMouseEnter={() => setHoveredJobId(job._id)}
               onMouseLeave={() => setHoveredJobId(null)}
             >
               <center>
-              <strong>{job.title} </strong>
-              <strong>at {job.company}</strong> 
+                <strong>{job.title} at {job.company}</strong>
               </center>
-              <p><strong>Posted by: {job.postedBy?.name || "Admin"}</strong></p>
+              <p><strong>Employer:{job.postedBy?.name || "Admin"}</strong></p>
+              <p><strong>Email:{job.postedBy?.email || "admin@workhunt.com"}</strong> </p>
               <p><strong>Location: {job.location}</strong></p>
-              <p><strong>Salary: ₹{job.salary} </strong></p>
+              <p><strong>Salary: ₹{job.salary} PM</strong></p>
               <p><strong>Posted on: {new Date(job.createdAt).toLocaleDateString()}</strong></p>
               <p><strong>Description: {job.description}</strong></p>
               <center>
-              <div className="button-container">
-                <button onClick={() => handleApply(job._id)} disabled={applications.includes(job._id)}>
-                  {applications.includes(job._id) ? "Applied" : "Apply"}
-                </button>
-                <button onClick={() => handleMessage(job.postedBy)}>Message</button>
-              </div>
+                <div className="button-container">
+                  <button onClick={() => handleApply(job._id)} disabled={applications.includes(job._id)}>
+                    {applications.includes(job._id) ? "Applied" : "Apply"}
+                  </button>
+                  <button onClick={() => handleMessage(job.postedBy)}>Message</button>
+                </div>
               </center>
-              {/* <button onClick={() => handleApply(job._id)} disabled={applications.includes(job._id)}>
-                {applications.includes(job._id) ? "Applied" : "Apply"}
-              </button>
-              <button onClick={() => handleMessage(job.postedBy)}>Message</button> */}
             </li>
           ))
         ) : (

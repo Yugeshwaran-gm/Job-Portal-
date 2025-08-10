@@ -15,39 +15,56 @@ const ProfileEdit = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      try {
-        const storedUser = localStorage.getItem("user");
+  try {
+    const storedUser = localStorage.getItem("user");
+    console.log("📦 Raw storedUser from localStorage:", storedUser);
 
-        if (!storedUser) {
-          navigate("/login");
-          return;
-        }
+    if (!storedUser) {
+      console.warn("⚠️ No user in localStorage — redirecting to login");
+      navigate("/login");
+      return;
+    }
 
-        const userData = JSON.parse(storedUser);
-        const token = userData?.token;
-        const userRole = userData?.role;  // ✅ Fetch role from localStorage
+    const userData = JSON.parse(storedUser);
+    console.log("✅ Parsed userData:", userData);
 
-        if (!token) {
-          navigate("/login");
-          return;
-        }
+    const token = userData?.token;
+    const userRole = userData?.role;
+    console.log("🔑 Token:", token);
+    console.log("👤 Role:", userRole);
 
-        setRole(userRole); // ✅ Set the role for Navbar
+    if (!token) {
+      console.warn("⚠️ No token found — redirecting to login");
+      navigate("/login");
+      return;
+    }
 
-        const { data } = await axios.get("http://localhost:3000/api/users/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+    setRole(userRole);
 
-        setName(data.name);
-        setEmail(data.email);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching profile:", error.response?.data?.message || error.message);
-        setLoading(false);
-      }
-    };
+    console.log("🌐 Fetching profile...");
+    const { data } = await axios.get("http://localhost:3000/api/users/profile", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-    fetchProfile();
+    console.log("📄 Profile data from API:", data);
+
+    setName(data.name);
+    setEmail(data.email);
+    setLoading(false);
+
+  } catch (error) {
+    console.error("❌ Error fetching profile:", error);
+    if (error.response) {
+      console.error("📡 API Error Data:", error.response.data);
+      console.error("📡 API Error Status:", error.response.status);
+      console.error("📡 API Error Headers:", error.response.headers);
+    }
+    setLoading(false);
+  }
+};
+
+fetchProfile();
+
   }, [navigate]);
 
   const handleSubmit = async (e) => {

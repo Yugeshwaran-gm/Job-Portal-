@@ -18,14 +18,17 @@ const JobPostForm = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem('token'); // ✅ Get token from local storage
+      // ✅ Retrieve token correctly from user object
+      const userData = JSON.parse(localStorage.getItem("user")); 
+      const token = userData?.token; 
+
       if (!token) {
         alert('You must be logged in to post a job.');
         return;
       }
 
       await axios.post('http://localhost:3000/api/jobs/post-job', formData, {
-        headers: { Authorization: `Bearer ${token}` } // ✅ Send token in headers
+        headers: { Authorization: `Bearer ${token}` } // ✅ Corrected token usage
       });
 
       setFormData({ title: '', company: '', location: '', salary: '', description: '' });

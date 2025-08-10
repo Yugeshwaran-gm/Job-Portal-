@@ -5,12 +5,16 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.post('/register', registerUser);
+router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/', getUsers);
-router.get('/:id', getUserById);
-router.put('/profile', protect, updateUser); // ✅ Only logged-in user can update their profile
-router.delete('/:id', deleteUser);
+
+// ✅ Put profile route before :id
 router.get('/profile', protect, getUserProfile);
+router.put('/profile', protect, updateUser); 
+
+router.get('/:id', getUserById);
+router.delete('/:id', deleteUser);
 
 
 export default router;

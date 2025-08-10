@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Application from "../models/Application.js";
-import Job from "../models/Job.js";
+import Job from "../models/job.js";
+import { sendMail } from "../utils/sendMail.js";
 
 // Apply for a job
 export const applyJob = async (req, res) => {
@@ -17,13 +18,25 @@ export const applyJob = async (req, res) => {
 
     // ✅ Check if the user has already applied for this job
     const existingApplication = await Application.findOne({ jobId, userId });
+    // if (existingApplication) {
+    //   console.log("User already applied for this job:", jobId);
+    //   return res.status(400).json({ message: "You have already applied for this job." });
+    // }
     if (existingApplication) {
-      console.log("User already applied for this job:", jobId);
+      if (existingApplication.status === "Rejected") {
+        return res.status(403).json({ message: "You can't re-apply. Your application was rejected." });
+      }console.log("User already applied for this job:", jobId);
       return res.status(400).json({ message: "You have already applied for this job." });
     }
 
+
     const application = new Application(req.body);
     await application.save();
+    await sendMail(
+      application.userId?.email || "applicant@example.com",
+      "Application Received",
+      `<p>Your application for <strong>${jobId}</strong> has been received.</p>`
+    );
     console.log("New application saved:", application); // ✅ Log the saved application
 
     // ✅ Increase application count for the job
@@ -130,6 +143,7 @@ export const getApplicationsForUser = async (req, res) => {
         }
       });
     }
+    
 
     res.status(200).json(applications);
   } catch (error) {
@@ -191,7 +205,7 @@ export const updateApplicationStatus = async (req, res) => {
     const { status } = req.body;
     const { id } = req.params;
     console.log("🔍 Received Application ID:", id);
-    if (!["Accepted", "Rejected"].includes(status)) {
+    if (!["Approved", "Rejected"].includes(status)) {
       return res.status(400).json({ message: "Invalid status value" });
     }
 
