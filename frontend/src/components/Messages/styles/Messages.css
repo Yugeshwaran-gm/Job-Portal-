@@ -9,7 +9,7 @@
 /* ===== User List ===== */
 .user-list {
   width: 280px;
-  background-color: #2f3542;
+  background-color: #555b69;
   color: white;
   display: flex;
   flex-direction: column;
@@ -45,6 +45,10 @@
   flex-direction: column;
   background: white;
   border-left: 1px solid #ccc;
+  
+}
+.chat-box h3{
+  text-align: center;
 }
 
 .chat-header {

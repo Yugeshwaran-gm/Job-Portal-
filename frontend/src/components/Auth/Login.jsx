@@ -38,6 +38,7 @@ const Login = () => {
   
 
   return (
+    <div class="main-wrapper">
     <div className="login-container">
       <h2>Login</h2>
       {error && <p className="error">{error}</p>}
@@ -66,6 +67,7 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
     </div>
   );
 };

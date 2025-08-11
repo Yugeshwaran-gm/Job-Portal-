@@ -1,20 +1,25 @@
-/* body {
+/* Make the container take full height minus header/footer */
+.body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-  margin: 0;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper to center content between header & footer */
+.main-wrapper {
+  margin-top: 80px;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-} */
+}
 
+/* Glassmorphic login box */
 .login-container {
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
-  margin-top: 200px;
-  margin-left: 500px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -26,75 +31,116 @@
   text-align: center;
 }
 
+/* Title */
 .login-container h2 {
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #2c0377;
+  font-weight: 600;
+}
+.login-container p a {
+  margin-bottom: 1.5rem;
+  color: #4d19af;
+  font-weight: 600;
 }
 
+/* Error message */
 .login-container .error {
   color: #ff4d4d;
   margin-bottom: 1rem;
 }
 
+/* Form layout */
 .login-container form {
   display: flex;
   flex-direction: column;
 }
 
+/* Inputs and select */
 .login-container input,
 .login-container select {
+  width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.85); /* More opaque for contrast */
+  color: #333; /* Dark text for input value */
+  box-sizing: border-box; /* Prevent size issues */
 }
 
+.login-container input::placeholder,
+.login-container select {
+  color: #333;      /* Dark gray for visibility */
+  opacity: 1;
+  font-size: 1em;
+}
+
+/* Focus styles */
 .login-container input:focus,
 .login-container select:focus {
-  border-color: #007bff;
+  border-color: #00c6ff;
   outline: none;
+  box-shadow: 0 0 5px #00c6ff;
 }
 
+/* Password container to match input size */
 .password-container {
   position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 2.5rem; /* Space for icon */
 }
 
 .password-toggle-icon {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  color: #fff;
 }
 
+/* Submit button */
 .login-container button {
   padding: 0.75rem;
-  background-color: #007bff;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .login-container button:hover {
-  background-color: #0056b3;
   transform: scale(1.05);
+  opacity: 0.95;
 }
 
+/* Footer text */
 .login-container p {
-  margin-top: 1rem;
-  color: #666;
+  margin-top: 18px;
+  text-align: center;
+  color: #333;
+  font-size: 1rem;
 }
 
 .login-container a {
-  color: #007bff;
+  color: #00c6ff;
   text-decoration: none;
 }
 
 .login-container a:hover {
   text-decoration: underline;
+}
+
+.login-container p a {
+  color: #1e90ff;
+  text-decoration: underline;
+  font-weight: 500;
 }

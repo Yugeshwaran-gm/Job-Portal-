@@ -1,0 +1,102 @@
+/* Employer Dashboard Modern Look */
+
+.employer-dashboard {
+  margin-top: 40px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f8f9fa, #eef1f4);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+/* Header */
+.employer-dashboard h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.employer-dashboard p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Post Job Button */
+.post-job-btn {
+  background-color: #4cafef;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.post-job-btn:hover {
+  background-color: #3a97d6;
+}
+
+/* Jobs List */
+.jobs-list {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0;
+  list-style: none;
+}
+
+.job-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 15px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.job-card strong {
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.job-card span {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* View Candidates Button */
+.view-btn {
+  margin-top: 10px;
+  background-color: #10b981;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.view-btn:hover {
+  background-color: #0e9e73;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .employer-dashboard h2 {
+    font-size: 1.6rem;
+  }
+
+  .job-card strong {
+    font-size: 1rem;
+  }
+}

@@ -3,11 +3,13 @@ import axios from 'axios';
 import Navbar from '../Common/Navbar';
 import { AuthContext } from "../../context/authContext";
 import './styles/SeekersDashboard.css';
-
+import { useNavigate } from 'react-router-dom';
+// ...existing code...
 const SeekersDashboard = () => {
   const { user } = useContext(AuthContext);
   const [jobsCount, setJobsCount] = useState(0);
   const [applicationsCount, setApplicationsCount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.id) {
@@ -42,7 +44,8 @@ const SeekersDashboard = () => {
         </div>
         <div className="stat-card messages">
           <h3>Messages</h3>
-          <button>View</button>
+          {/* <button>View</button> */}
+          <button onClick={() => navigate('/messages')}>View</button>
         </div>
       </div>
     </div>

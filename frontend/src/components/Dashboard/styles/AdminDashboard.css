@@ -1,57 +1,99 @@
+/* Admin Dashboard - Modern Look */
+
 .dashboard-container {
+  margin-top: 40px;
   min-height: 100vh;
-  background: #f4f6f8;
-}
-
-.dashboard-content {
+  background: linear-gradient(to bottom right, #f8f9fa, #eef1f4);
   padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Header */
 .dashboard-title {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
 }
 
 .loading-text {
   color: #666;
+  text-align: center;
+  margin-top: 20px;
 }
 
+/* Cards Grid */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
+/* Individual Card */
 .card {
   background: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px 20px;
+  border-radius: 12px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
+/* Icon */
 .icon {
-  font-size: 30px;
+  font-size: 2rem;
+  color: #4cafef;
 }
 
+/* Count Number */
 .count {
-  font-size: 22px;
+  font-size: 2.2rem;
   font-weight: bold;
+  color: #222;
 }
 
+/* Card Title */
+.card-title {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Card Variants */
 .users-card {
-  border-left: 5px solid #3b82f6;
+  border-top: 4px solid #3b82f6;
 }
 
 .jobs-card {
-  border-left: 5px solid #10b981;
+  border-top: 4px solid #10b981;
+}
+
+.reports-card {
+  border-top: 4px solid #ff9800;
+}
+
+.settings-card {
+  border-top: 4px solid #9c27b0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .dashboard-title {
+    font-size: 1.6rem;
+  }
+
+  .count {
+    font-size: 1.8rem;
+  }
 }

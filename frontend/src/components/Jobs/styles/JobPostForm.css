@@ -1,5 +1,96 @@
-.Filedset{
-    margin-top: 100px;
-    width: 50%;
-    display: flex;
+/* Job Post Form Modern Style */
+
+.job-post-form {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(to bottom right, #f8f9fa, #eef1f4);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Filedset {
+    margin-top: 80px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px 35px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  width: 100%;
+  border: none;
+}
+
+.Filedset legend {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+  padding: 0 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 12px 8px;
+  vertical-align: top;
+}
+
+label {
+  font-weight: 600;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4cafef;
+  box-shadow: 0 0 0 2px rgba(76, 175, 239, 0.3);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #4cafef;
+  color: white;
+  font-size: 1rem;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #3a97d6;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .Filedset {
+    padding: 20px;
+  }
+  
+  .Filedset legend {
+    font-size: 1.3rem;
+  }
 }

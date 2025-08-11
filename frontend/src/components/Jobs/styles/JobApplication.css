@@ -1,59 +1,98 @@
-
-  .JobContainer1{
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    /* margin-top: 4750em !important; */
-    margin-top: 80px;
-    padding: 20px;
-    width: 100%;
-  }
-  
-  .appliedJobCard {
-    display:grid;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-top: 50px;;
-    /* width: 100%; */
-    border-radius: 5px;
-    background: #fff;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .appliedJobCard h3 {
-    margin-top: 0;
-  }
-  
-  .appliedJobCard p {
-    margin: 5px 0;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px auto;
-  }
-  
-  .navbar {
-    margin-bottom: 20px;
-  }
-
-  .filter {
-    text-align: center;
-    margin-bottom: 20px;
-    align-items: center;
+.jobContainer1 {
+  /* background: linear-gradient(135deg, #f5f7fa, #c3cfe2); */
+  margin-top: 40px;
+  padding: 20px;
+  width: 100%;
 }
 
-.filter input, .filter select {
-    display: inline-block;
-    padding: 8px 12px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 5px;
-    transition: border-color 0.3s ease-in-out;
+/* 🔽 Toggle Button Style */
+.filter-toggle {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.filter input:focus, .filter select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+.filter-toggle button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.filter-toggle button:hover {
+  background: #0056b3;
+}
+
+/* 🔽 Sliding Filter Panel */
+.filter-panel {
+  text-align: center;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.filter-panel.show {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.filter-panel input,
+.filter-panel select {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 5px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.filter-panel input:focus,
+.filter-panel select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.appliedJobCard {
+  display: grid;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 30px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.appliedJobCard h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.appliedJobCard p {
+  margin: 5px 0;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: #ffc107;
+  color: #fff;
+}
+
+.status-badge.accepted {
+  background: #28a745;
+  color: #fff;
+}
+
+.status-badge.rejected {
+  background: #dc3545;
+  color: #fff;
 }

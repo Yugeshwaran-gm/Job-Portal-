@@ -1,79 +1,181 @@
-/* body{
-    background-color: #f3f3f3;
-} */
+/* Container */
 .jobListContainer {
-    margin-top: 40px !important; /* Adjust this if needed */
-    padding: 20px;
-  }
-  .jobItem {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin: 20px auto;
-    border-radius: 5px;
-    background: #f9f9f9;
-    max-width: 600px;
-    word-wrap: break-word;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  .jobItemHover {
-    background-color: #e3f2fd; /* Light blue hover effect */
-  }
-  
-  .jobItem strong {
-    display: block; /* Ensures each line is on a new row */
-    font-size: 18px;
-  }
-  h3{
-    text-align: center;
-  }
-  
-  p {
-    margin: 5px 0;
-  }
-  .button-container {
-    display: flex;
-    gap: 10px; /* Space between buttons */
-    margin-top: 10px;
-    justify-content: center;
-    
+  margin-top: 40px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #f8f9fa, #eef1f4);
+  min-height: 100vh;
 }
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    white-space: normal; /* Allow text to wrap */
-    word-wrap:normal; /* Ensure text wraps inside the button */
-    
-    /* border-radius: 4px; */
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  button:hover {
-    background-color: #0056b3;
-  }
+
+/* Heading */
+.jobListContainer h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto 25px auto;
+}
+
+.filters input,
+.filters select {
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
+}
+
+/* Job Card */
+.jobItem {
+  border: none;
+  padding: 20px;
+  margin: 18px auto;
+  border-radius: 12px;
+  background: white;
+  max-width: 650px;
+  word-wrap: break-word;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jobItemHover {
+  background-color: #f0f8ff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Job Title */
+.jobItem strong {
+  font-size: 18px;
+  color: #222;
+}
+
+.jobItem p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Buttons Container */
+.button-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+/* Buttons */
+.button-container button {
+  padding: 8px 14px;
+  background: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.button-container button:hover {
+  background: #0056b3;
+}
+
+.button-container button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 600px) {
   .filters {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters input,
+  .filters select {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .jobItem {
+    padding: 16px;
+  }
+}
+.filter-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
-.filters input, .filters select {
-    padding: 8px 12px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+.filter-toggle button {
+  padding: 8px 16px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.filters input:focus, .filters select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+.filter-toggle button:hover {
+  background: #0056b3;
+}
+
+/* Optional: Smooth reveal animation for filters */
+.filters {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Wrapper for smooth dropdown */
+.filters-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.filters-wrapper.open {
+  max-height: 500px; /* enough to fit content */
+  opacity: 1;
+}
+
+/* Keep your existing .filters styling */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto 25px auto;
 }

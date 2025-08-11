@@ -45,6 +45,7 @@ const Register = () => {
     
 
   return (
+    <div class="main-wrapper">
     <div className="register-container">
       <h2>Register</h2>
       {error && <p className="error">{error}</p>}
@@ -98,6 +99,7 @@ const Register = () => {
         <button type="submit">Register</button>
       </form>
       <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
     </div>
   );
 };

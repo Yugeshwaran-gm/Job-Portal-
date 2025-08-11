@@ -1,18 +1,108 @@
 .profile-edit-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 30px 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.label {
-  font-size: 1.2em;
-  margin-top: 10px;
+
+.profile-edit-container h2 {
+  text-align: center;
+  color: #2d2d2d;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
+
+.message {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.message.success {
+  background-color: #e8f9f0;
+  color: #2d7a4b;
+  border: 1px solid #b2e2c6;
+}
+
+.message.error {
+  background-color: #fde8e8;
+  color: #a94442;
+  border: 1px solid #f5c2c2;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+}
+
+legend {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 12px 8px;
+  vertical-align: middle;
+}
+
+label {
+  font-weight: 500;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.3);
+}
+
 .button-container {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  padding-top: 10px;
+}
+
+button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #3a7ac9;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
 }

@@ -12,14 +12,13 @@ const JobList = () => {
   const [hoveredJobId, setHoveredJobId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({ location: '', minSalary: '', maxSalary: '' });
+  const [showFilters, setShowFilters] = useState(false); // 🔹 New state
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/jobs/get");
-        console.log("✅ Jobs fetched:", response.data);
-
         const sortedJobs = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setJobs(sortedJobs);
       } catch (error) {
@@ -76,33 +75,43 @@ const JobList = () => {
       <Navbar role="seeker" />
       <h3>Available Jobs</h3>
 
-      {/* 🔎 Search & Filter Options */}
-      <div className="filters">
-        <input 
-          type="text" 
-          placeholder="Search jobs..." 
-          value={searchQuery} 
-          onChange={(e) => setSearchQuery(e.target.value)} 
-        />
-        <input 
-          type="text" 
-          placeholder="Location" 
-          value={filters.location} 
-          onChange={(e) => setFilters({ ...filters, location: e.target.value })} 
-        />
-        <input 
-          type="number" 
-          placeholder="Min Salary" 
-          value={filters.minSalary} 
-          onChange={(e) => setFilters({ ...filters, minSalary: e.target.value })} 
-        />
-        <input 
-          type="number" 
-          placeholder="Max Salary" 
-          value={filters.maxSalary} 
-          onChange={(e) => setFilters({ ...filters, maxSalary: e.target.value })} 
-        />
+      {/* 🔘 Toggle Button */}
+      <div className="filter-toggle">
+        <button onClick={() => setShowFilters(!showFilters)}>
+          {showFilters ? "Hide Filters" : "Show Filters"}
+        </button>
       </div>
+
+      {/* 🔎 Search & Filter Options */}
+<div className={`filters-wrapper ${showFilters ? "open" : ""}`}>
+  <div className="filters">
+    <input 
+      type="text" 
+      placeholder="Search jobs..." 
+      value={searchQuery} 
+      onChange={(e) => setSearchQuery(e.target.value)} 
+    />
+    <input 
+      type="text" 
+      placeholder="Location" 
+      value={filters.location} 
+      onChange={(e) => setFilters({ ...filters, location: e.target.value })} 
+    />
+    <input 
+      type="number" 
+      placeholder="Min Salary" 
+      value={filters.minSalary} 
+      onChange={(e) => setFilters({ ...filters, minSalary: e.target.value })} 
+    />
+    <input 
+      type="number" 
+      placeholder="Max Salary" 
+      value={filters.maxSalary} 
+      onChange={(e) => setFilters({ ...filters, maxSalary: e.target.value })} 
+    />
+  </div>
+</div>
+
 
       <ul>
         {filteredJobs.length > 0 ? (
@@ -114,8 +123,8 @@ const JobList = () => {
               <center>
                 <strong>{job.title} at {job.company}</strong>
               </center>
-              <p><strong>Employer:{job.postedBy?.name || "Admin"}</strong></p>
-              <p><strong>Email:{job.postedBy?.email || "admin@workhunt.com"}</strong> </p>
+              <p><strong>Employer: {job.postedBy?.name || "Admin"}</strong></p>
+              <p><strong>Email: {job.postedBy?.email || "admin@workhunt.com"}</strong></p>
               <p><strong>Location: {job.location}</strong></p>
               <p><strong>Salary: ₹{job.salary} PM</strong></p>
               <p><strong>Posted on: {new Date(job.createdAt).toLocaleDateString()}</strong></p>
